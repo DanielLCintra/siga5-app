@@ -30,6 +30,8 @@
               label="Nome"
               color="secondary"
               required
+              :error="error_name"
+              :error-messages="error_message_name"
             />
           </v-flex>
 
@@ -41,6 +43,8 @@
               label="E-mail"
               color="secondary"
               required
+              :error="error_mail"
+              :error-messages="error_messages_mail"
             />
           </v-flex>
 
@@ -53,6 +57,8 @@
               label="CPF"
               color="secondary"
               required
+              :error="error_document"
+              :error-messages="error_messages_document"
             />
           </v-flex>
 
@@ -63,6 +69,8 @@
               label="Empresa"
               color="secondary"
               required
+              :error="error_company"
+              :error-messages="error_messages_company"
             />
           </v-flex>
 
@@ -74,6 +82,8 @@
               label="Senha"
               color="secondary"
               required
+              :error="error_password"
+              :error-messages="error_messages_password"
             />
           </v-flex>
 
@@ -85,6 +95,8 @@
               label="Confirme a senha"
               color="secondary"
               required
+              :error="error_password_confirm"
+              :error-messages="error_messages_password_confirm"
             />
           </v-flex>
         </v-layout>
@@ -121,7 +133,19 @@ export default {
       password: null,
       company: null,
       document: null
-    }
+    },
+    error_name: false,
+    error_messages_name: [],
+    error_mail: false,
+    error_messages_mail: [],
+    error_document: false,
+    error_messages_document: [],
+    error_company: false,
+    error_messages_company: [],
+    error_password: false,
+    error_messages_password: [],
+    error_password_confirm: false,
+    error_messages_password_confirm: []
   }),
 
   methods: {
@@ -161,7 +185,63 @@ export default {
           this.loading = false
         })
       return true
+    },
+
+    validateForm() {
+      this.clearErrorMessages()
+      let valueReturn = true
+
+      if (this.name === '' || this.name === null) {
+        this.error_name = true
+        this.error_messages_name.push('Obrigatório')
+        valueReturn = false
+      }
+
+      if (this.email === '' || this.email === null) {
+        this.error_mail = true
+        this.error_messages_mail.push('Obrigatório')
+        valueReturn = false
+      }
+
+      if (this.document === '' || this.document === null) {
+        this.error_document = true
+        this.error_messages_document.push('Obrigatório')
+        valueReturn = false
+      }
+
+      if (this.company === '' || this.company === null) {
+        this.error_company = true
+        this.error_messages_company.push('Obrigatório')
+        valueReturn = false
+      }
+
+      if (this.password === '' || this.password === null) {
+        this.error_password = true
+        this.error_messages_password.push('Obrigatório')
+      }
+
+      if (this.confirmPassword === '' || this.confirmPassword === null) {
+        this.error_password_confirm = true
+        this.error_messages_password_confirm.push('Obrigatório')
+      }
+
+      return valueReturn
     }
+  },
+
+  clearErrorMessages() {
+    this.error_name = false
+    this.error_messages_name = []
+    this.error_mail = false
+    this.error_messages_mail = []
+    this.error_document = false
+    this.error_messages_document = []
+    this.error_company = false
+    this.error_messages_company = []
+    this.error_password = false
+    this.error_messages_password = []
+    this.error_password_confirm = false
+    this.error_messages_password_confirm = []
   }
 }
 </script>
